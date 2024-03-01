@@ -14,7 +14,7 @@ largeur = 800
 hauteur = 600
 
 # Charger l'image de l'arrière-plan
-fond = pygame.image.load("LA JUNGLE !!!!.png")
+fond = pygame.image.load("Plan de travail 1.png")
 
 # Création de la fenêtre
 fenetre = pygame.display.set_mode((largeur, hauteur))
@@ -22,9 +22,9 @@ pygame.display.set_caption("Jeu de singe")
 
 # Chargement des images
 image_personnage = pygame.image.load("Singe.png").convert_alpha()
-image_obstacle = pygame.image.load("bANANESprite.png").convert_alpha()
-image_bonus = pygame.image.load("banana BLUE.png").convert_alpha()
-image_multiplicateur = pygame.image.load("Salade.png").convert_alpha()
+image_obstacle = pygame.image.load("Salade.png").convert_alpha()
+image_bonus = pygame.image.load("Banane.png").convert_alpha()
+image_multiplicateur = pygame.image.load("Banane rose.png").convert_alpha()
 
 # Redimensionnement des images
 image_personnage = pygame.transform.scale(image_personnage, (50, 50))
@@ -106,12 +106,67 @@ mult = pygame.sprite.Group()
 
 debut_jeu = pygame.time.get_ticks()
 
+# Définir la taille de la fenêtre
+largeur, hauteur = 800, 600
+fenetre = pygame.display.set_mode((largeur, hauteur))
+pygame.display.set_caption("Menu")
+
+# Chargez l'image de fond du menu
+fond_menu_img = pygame.image.load("Plan de travail 1.png")  # Assurez-vous de remplacer "LA JUNGLE !!!!.png" par le chemin de votre image
+
+# Chargez les images des boutons
+bouton_jouer_img = pygame.image.load("Singe.png")  # Assurez-vous de remplacer "Singe.png" par le chemin de votre image
+bouton_options_img = pygame.image.load("Option.png")  # Assurez-vous de remplacer "Option.png" par le chemin de votre image
+
+bouton_jouer_img = pygame.transform.scale(bouton_jouer_img, (75, 25))
+bouton_options_img = pygame.transform.scale(bouton_options_img, (75, 25))
+
+# Variable pour indiquer si le jeu doit être lancé
+jeu_lancé = False
+
+
+# Couleurs
+BLANC = (255, 255, 255)
+
+# Boucle principale du menu
+menu_running = True
+while menu_running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            menu_running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if 300 <= event.pos[0] <= 500 and 200 <= event.pos[1] <= 250:
+                print("Jouer")
+                jeu_lancé = True
+            elif 300 <= event.pos[0] <= 500 and 300 <= event.pos[1] <= 350:
+                print("Options")
+                # Mettez ici le code pour afficher les options
+
+    if jeu_lancé:
+        break
+
+    if jeu_lancé:
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                sys.exit()
+
+    # Afficher l'image de fond du menu
+    fenetre.fill(BLANC)
+    fenetre.blit(fond_menu_img, (0, 0))
+
+    # Afficher les boutons
+    fenetre.blit(bouton_jouer_img, (375, 200))
+    fenetre.blit(bouton_options_img, (375, 300))
+
+    pygame.display.flip()
+
 # Boucle de jeu
 clock = pygame.time.Clock()
 game_over = False
 score = 0
 victoire = False
- 
  
 while not game_over and not victoire:
     for event in pygame.event.get():
