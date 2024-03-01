@@ -13,12 +13,9 @@ NOIR = (0, 0, 0)
 largeur = 800
 hauteur = 600
 
-# Charger l'image de l'arrière-plan
-fond = pygame.image.load("LA JUNGLE !!!!.png")
-
 # Création de la fenêtre
 fenetre = pygame.display.set_mode((largeur, hauteur))
-pygame.display.set_caption("Jeu de singe")
+pygame.display.set_caption("Jeu d'évitement d'obstacles")
 
 # Chargement des images
 image_personnage = pygame.image.load("Singe.png").convert_alpha()
@@ -104,38 +101,38 @@ obstacles = pygame.sprite.Group()
 bonuses = pygame.sprite.Group()
 mult = pygame.sprite.Group()
 
-debut_jeu = pygame.time.get_ticks()
-
 # Boucle de jeu
 clock = pygame.time.Clock()
 game_over = False
 score = 0
+debut_jeu = pygame.time.get_ticks
+
 victoire = False
- 
- 
+
 while not game_over and not victoire:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
 
-    if len(mult) < 1:
+    if len(mult) < 0:
         Multiplicateur = multiplicateur()
         mult.add(Multiplicateur)
         all_sprites.add(Multiplicateur)
 
     # Ajout de bonus
-    if len(bonuses) < 4:
+    if len(bonuses) < 1:
         bonus = Bonus()
         bonuses.add(bonus)
         all_sprites.add(bonus)
-    
-    # Au début du jeu
 
     # Ajout d'obstacles
-    if len(obstacles) < 7:
+    if len(obstacles) < 1:
         obstacle = Obstacle()
         obstacles.add(obstacle)
         all_sprites.add(obstacle)
+
+    #ajout proportionnel au temps
+    temps_ecoule = (pygame.time.get_ticks() - debut_jeu) // 1000
 
     # Mise à jour des sprites
     all_sprites.update()
@@ -157,39 +154,28 @@ while not game_over and not victoire:
 
     # Effacement de l'écran
     fenetre.fill(BLANC)
-    
-     # Affichage de l'arrière-plan
-    fenetre.blit(fond, (0, 0))
 
     # Affichage des sprites
     all_sprites.draw(fenetre)
 
-    # Début du jeu
-    
-
-     # Calcul du temps écoulé depuis le début du jeu en secondes
-    temps_ecoule = (pygame.time.get_ticks() - debut_jeu) // 1000
-
-
         # Affichage du score
     police_score = pygame.font.SysFont("Arial", 30)
-    texte_score = police_score.render("Score: " + str(score), True, BLANC)
+    texte_score = police_score.render("Score: " + str(score), True, NOIR)
     fenetre.blit(texte_score, (10, 10))
-
-    # Affichage du chronomètre à gauche de l'écran
-    police_fin = pygame.font.SysFont("Arial", 30)
-    texte_chrono = police_fin.render("Temps écoulé: {} s".format(temps_ecoule), True, BLANC)
-    fenetre.blit(texte_chrono, (500, 10))
-
 
     # Rafraîchissement de l'écran
     pygame.display.flip()
+
+    # Affichage du chronomètre à gauche de l'écran
+    texte_chrono = police.render("Temps écoulé: {} s".format(temps_ecoule), True, NOIR)
+    fenetre.blit(texte_chrono, (10, 10))
+
 
     # Limite de FPS
     clock.tick(60)
 
  # Vérification de la victoire
-    if score >= 1000 :
+    if score >= 100:
         victoire = True
 
 if victoire:
