@@ -176,7 +176,7 @@ def jeu():
                 pygame.quit()
                 sys.exit()
 
-        if len(mult) < 1:
+        if len(mult) < 0.5:
             Multiplicateur = multiplicateur()
             mult.add(Multiplicateur)
             all_sprites.add(Multiplicateur)
@@ -186,7 +186,7 @@ def jeu():
             bonuses.add(bonus)
             all_sprites.add(bonus)
     
-        if len(obstacles) < 7:
+        if len(obstacles) < 8:
             obstacle = Obstacle()
             obstacles.add(obstacle)
             all_sprites.add(obstacle)
@@ -232,7 +232,7 @@ def jeu():
         Ost.stop()
     else:
         afficher_message(fenetre, "Ne perd pas espoir... Singe", background_image1)
-        Ost.stop
+        Ost.stop()
 # Fonction principale pour gérer les transitions entre les états du jeu
 def main():
     while True:
